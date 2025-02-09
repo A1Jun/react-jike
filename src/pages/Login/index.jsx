@@ -1,9 +1,17 @@
 import { Card, Form, Input, Button, message } from 'antd'
 import './index.scss'
 import logo from '@/assets/logo.png'
+import {useDispatch} from 'react-redux'
+import {fetchLogin} from '@/store/modules/user'
+import {useNavigate} from 'react-router-dom'
 
 const Login = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const onFinish = async(values) => {
+    // 调用异步方法 完成登陆
+    await dispatch(fetchLogin(values))
+    navigate('/')
     message.success('登录成功')
   }
   return (

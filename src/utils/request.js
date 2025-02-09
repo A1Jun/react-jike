@@ -1,5 +1,7 @@
 //axios 封装
 
+import axios from 'axios'
+
 //1. 根域名
 //2. 超时时间
 //3. 请求拦截器/详情拦截器
@@ -25,4 +27,4 @@ request.interceptors.response.use(response => {
   return Promise.reject(error)
 })
 
-export default request
+export {request}
