@@ -1,4 +1,6 @@
-import { request } from './request'
-import { getToken, saveToken, removeToken } from './token'
+// 统一中转工具模块函数
+// import {request} from '@/utils'
 
-export { request, getToken, saveToken, removeToken }
+import {request} from './request'
+
+export { request }

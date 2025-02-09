@@ -1,46 +1,28 @@
-import axios from 'axios'
-import { getToken, removeToken } from '@/utils'
-import router from '@/router'
+//axios 封装
+
+//1. 根域名
+//2. 超时时间
+//3. 请求拦截器/详情拦截器
+
 const request = axios.create({
   baseURL: 'http://geek.itheima.net/v1_0',
-  timeout: 5000,
+  timeout: 5000
 })
 
 // 添加请求拦截器
-request.interceptors.request.use(
-  (config) => {
-    const token = getToken()
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
-    }
-    return config
-  },
-  (error) => {
-    return Promise.reject(error)
-  },
-)
+// 在发送请求之前，可以做一些处理 【参数的处理】
+request.interceptors.request.use(config => {
+  return config
+},(error) => {
+  return Promise.reject(error)
+})
 
 // 添加响应拦截器
-request.interceptors.response.use(
-  (response) => {
-    // 2xx 范围内的状态码都会触发该函数。
-    // 对响应数据做点什么
-    return response.data
-  },
-  (error) => {
-    // 超出 2xx 范围的状态码都会触发该函数。
-    // 对响应错误做点什么
-    // 处理token失效 401的状态
-    if(error.response.status === 401){
-      removeToken()
-      router.navigate('/login').then(()=>{
-        window.location.reload()
-      })
-    }
-    alert('请求超时，请前往控制台查看错误')
-    console.log(error)
-    // return Promise.reject(error)
-  },
-)
+// 在响应返回到客户端之前 做拦截 重点处理返回的数据
+request.interceptors.response.use(response => {
+  return response.data
+},(error) => {
+  return Promise.reject(error)
+})
 
-export { request }
+export default request
